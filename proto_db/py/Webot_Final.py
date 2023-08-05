@@ -32,7 +32,7 @@ def submit(smile):
      else:
       pass
     driver.close()  
-    #driver.quit()
+    driver.quit()
 
 def entresacar(nombre_archivo):
     # Lista para almacenar los SMILES extraídos
