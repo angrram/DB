@@ -1,11 +1,14 @@
 from selenium import webdriver 
 from selenium.webdriver.firefox.options import Options 
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 import time
 from progressbar import ProgressBar,Bar, Percentage
 import os
 # the target website 
-url = "http://www.swisstargetprediction.ch/?" 
+url = "http://www.swisstargetprediction.ch/" 
 # the interface for turning on headless mode 
 options = Options() 
 options.set_preference("browser.download.folderList", '2')
@@ -23,16 +26,20 @@ def submit(smile):
     driver.execute_script(com+smile+caracter)
     #print(com+smile+caracter + "\n")
     driver.execute_script('document.getElementById("myForm").submit()')
-    #print('fue introducido con exito' + "\n")
     dummy_boolean = False
-    while dummy_boolean==False:
-     if len(driver.find_elements(By.CLASS_NAME, "buttons-csv"))>0:
-      driver.execute_script('document.getElementsByClassName("buttons-csv")[0].click()')
-      dummy_boolean=True 
-     else:
-      pass
-    driver.close()  
-    driver.quit()
+    WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.CLASS_NAME, "buttons-csv"))).click()
+    #while dummy_boolean==False:
+    # if element!=[]: 
+    #    element=driver.find_elements(By.CLASS_NAME, "buttons-csv")
+    #    print(smile)
+    #    actions = ActionChains(driver)
+        #actions.click(element)
+        #driver.execute_async_script('document.getElementsByClassName("buttons-csv")[0].click()')
+      #  dummy_boolean=True  
+    # else:
+     # pass
+    driver.close()
+
 
 def entresacar(nombre_archivo):
     # Lista para almacenar los SMILES extraídos
