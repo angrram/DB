@@ -45,7 +45,7 @@ def cambia_nombre(ltid):
     #cmabiar al nombre->ltid
     if(check_file):
         try:
-            os.rename("SwissTargetPrediction.csv", ltid+'.cvs')        
+            os.rename("SwissTargetPrediction.csv", ltid+'.csv')        
         except:
             print("Permisos de usuario no suficiente para cambiar el nombre del archivo")
 
