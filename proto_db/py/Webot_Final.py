@@ -27,16 +27,25 @@ def submit(smile):
     driver.get(url) 
     com="document.forms[0].smiles.value='"
     caracter="'"
-    driver.execute_script(com+smile+caracter)
-    #print(com+smile+caracter + "\n")
-    driver.execute_script('document.getElementById("myForm").submit()')
+    time.sleep(5)
+    try:
+        driver.execute_script(com+smile+caracter)
+        #print(com+smile+caracter + "\n")
+    except:
+        time.sleep(5)
+        driver.execute_script(com+smile+caracter)
+    try:
+        driver.execute_script('document.getElementById("myForm").submit()')
+        #print(com+smile+caracter + "\n")
+    except:
+        time.sleep(5)
+        driver.execute_script('document.getElementById("myForm").submit()')
     dummy_boolean = False
     try:
         WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.CLASS_NAME, "buttons-csv"))).click()
     except:
         print('No es posible procesarsmile: '+smile+ "\n")
     driver.close()
-
 def cambia_nombre(ltid):
     #print(ltid)
     #preguntar si esxiste SwissTargetPrediction.csv
@@ -48,7 +57,6 @@ def cambia_nombre(ltid):
             os.rename("SwissTargetPrediction.csv", ltid+'.csv')        
         except:
             print("Permisos de usuario no suficiente para cambiar el nombre del archivo")
-
 def entresacar(nombre_archivo):
     # Lista para almacenar los SMILES extraídos
     smiles_extraidos = []
@@ -73,6 +81,6 @@ def entresacar(nombre_archivo):
             pbar.update(i)
 
 if __name__ == '__main__':
-    nombre_archivo="Resultados_Bot.txt"
+    nombre_archivo=".\Resultados_Bot.txt"
     entresacar(nombre_archivo)
     print("Proceso terminado con exito! :)")
