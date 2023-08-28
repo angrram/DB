@@ -22,7 +22,7 @@ options.set_preference("browser.helperApps.neverAsk.saveToDisk", "")
 options.add_argument("-headless") 
 options.add_argument("--incognito")
 options.add_argument('--disable-gpu') if os.name == 'nt' else None
-def submit(smile):
+def submit(smile,compuesto_name):
     driver = webdriver.Firefox(options=options) 
     driver.get(url) 
     com="document.forms[0].smiles.value='"
@@ -46,17 +46,26 @@ def submit(smile):
     except:
         print('No es posible procesarsmile: '+smile+ "\n")
     driver.close()
-def cambia_nombre(ltid):
-    #print(ltid)
-    #preguntar si esxiste SwissTargetPrediction.csv
+def cambia_nombre(ltid,compuesto_name):
+    #ir a lotus/lotusid 
+    #copiar el document.querySelector("#overview > div > div > div.row > div.col-sm-8 > table > tbody > tr:nth-child(1) > td:nth-child(2)")
+    driver = webdriver.Firefox(options=options) 
+    driver.get("https://lotus.naturalproducts.net/compound/lotus_id/"+ltid)
     path = './SwissTargetPrediction.csv'
     check_file = os.path.isfile(path)
-    #cmabiar al nombre->ltid
-    if(check_file):
-        try:
-            os.rename("SwissTargetPrediction.csv", ltid+'.csv')        
-        except:
-            print("Permisos de usuario no suficiente para cambiar el nombre del archivo")
+    try:
+        name_compuesto = driver.execute_script('document.querySelector("#overview > div > div > div.row > div.col-sm-8 > table > tbody > tr:nth-child(1) > td:nth-child(2)").textContent')
+        os.rename("SwissTargetPrediction.csv", name_compuesto+'.csv')
+    except:
+        print("Permisos de usuario no suficiente para cambiar el nombre del archivo")
+        #cmabiar al nombre->ltid
+        if(check_file):
+            try:
+                os.rename("SwissTargetPrediction.csv", ltid+'.csv')        
+            except:
+                print("Permisos de usuario no suficiente para cambiar el nombre del archivo")
+             
+    
 def entresacar(nombre_archivo):
     # Lista para almacenar los SMILES extraídos
     smiles_extraidos = []
@@ -73,8 +82,9 @@ def entresacar(nombre_archivo):
             ltid= linea[0:10].strip()
             #print("Copié el SMILES con exito!" + "\n")
             #print(smile)
-            submit(smile)
-            cambia_nombre(ltid)
+            compuesto_name  =   ("null")
+            submit(smile,compuesto_name)
+            cambia_nombre(ltid,compuesto_name)
             smiles_extraidos.append(smile)
             i=i+1
             os.system('cls')
