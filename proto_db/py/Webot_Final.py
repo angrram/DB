@@ -78,9 +78,7 @@ def entresacar(nombre_archivo):
             # Extraer los SMILES después de los primeros 11 caracteres y agregarlos a la lista
             smile = linea[11:].strip()
             ltid= linea[0:10].strip()
-            #print("Copié el SMILES con exito!" + "\n")
-            #print(smile)
-            compuesto_name  =   ("null")
+            compuesto_name  = ("null")
             submit(smile,compuesto_name)
             cambia_nombre(ltid,compuesto_name)
             smiles_extraidos.append(smile)
