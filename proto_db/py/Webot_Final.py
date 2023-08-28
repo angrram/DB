@@ -12,7 +12,6 @@ import os.path
 url = "http://www.swisstargetprediction.ch/" 
 # the interface for turning on headless mode 
 options = Options() 
-options.set_preference("browser.download.folderList", '2')
 options.set_preference("browser.download.manager.showWhenStarting", False)
 options.set_preference("browser.helperApps.neverAsk.saveToDisk", "application/x-gzip")
 options.set_preference("browser.download.folderList",2)
@@ -30,7 +29,6 @@ def submit(smile,compuesto_name):
     time.sleep(5)
     try:
         driver.execute_script(com+smile+caracter)
-        #print(com+smile+caracter + "\n")
     except:
         time.sleep(5)
         driver.execute_script(com+smile+caracter)
