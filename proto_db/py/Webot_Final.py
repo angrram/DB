@@ -34,7 +34,6 @@ def submit(smile,compuesto_name):
         driver.execute_script(com+smile+caracter)
     try:
         driver.execute_script('document.getElementById("myForm").submit()')
-        #print(com+smile+caracter + "\n")
     except:
         time.sleep(5)
         driver.execute_script('document.getElementById("myForm").submit()')
