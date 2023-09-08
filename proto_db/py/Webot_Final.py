@@ -12,7 +12,6 @@ import os.path
 url = "http://www.swisstargetprediction.ch/" 
 # the interface for turning on headless mode 
 options = Options() 
-options.set_preference("browser.download.folderList", '2')
 options.set_preference("browser.download.manager.showWhenStarting", False)
 options.set_preference("browser.helperApps.neverAsk.saveToDisk", "application/x-gzip")
 options.set_preference("browser.download.folderList",2)
@@ -30,13 +29,11 @@ def submit(smile,compuesto_name):
     time.sleep(5)
     try:
         driver.execute_script(com+smile+caracter)
-        #print(com+smile+caracter + "\n")
     except:
         time.sleep(5)
         driver.execute_script(com+smile+caracter)
     try:
         driver.execute_script('document.getElementById("myForm").submit()')
-        #print(com+smile+caracter + "\n")
     except:
         time.sleep(5)
         driver.execute_script('document.getElementById("myForm").submit()')
@@ -80,9 +77,7 @@ def entresacar(nombre_archivo):
             # Extraer los SMILES después de los primeros 11 caracteres y agregarlos a la lista
             smile = linea[11:].strip()
             ltid= linea[0:10].strip()
-            #print("Copié el SMILES con exito!" + "\n")
-            #print(smile)
-            compuesto_name  =   ("null")
+            compuesto_name  = ("null")
             submit(smile,compuesto_name)
             cambia_nombre(ltid,compuesto_name)
             smiles_extraidos.append(smile)
